@@ -27,7 +27,7 @@ public class ChainExample {
                         System.out.println(getId());
                     }
                 },
-                new ChainTask("async-task-01", false) {
+                new ChainTask("async-task-01", true) {
                     @Override
                     public void run() {
                         System.out.println(getId());
