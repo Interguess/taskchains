@@ -35,13 +35,17 @@ public class Chain {
     public void work(boolean async) {
         if (async) {
             new Thread(() -> {
-                List<ChainTask> tasksCopy = new ArrayList<>(this.tasks);
-                tasks.clear();
-                tasksCopy.forEach(task -> task.start(executor));
+            List<ChainTask> tasksCopy = new ArrayList<>(this.tasks);
+            tasks.clear();
+
+            tasksCopy.sort(Comparator.comparingInt(ct -> ct.getPriority().getValue()));
+            tasksCopy.forEach(task -> task.start(executor));
             }).start();
         } else {
             List<ChainTask> tasksCopy = new ArrayList<>(this.tasks);
             tasks.clear();
+
+            tasksCopy.sort(Comparator.comparingInt(ct -> ct.getPriority().getValue()));
             tasksCopy.forEach(task -> task.start(executor));
         }
     }
