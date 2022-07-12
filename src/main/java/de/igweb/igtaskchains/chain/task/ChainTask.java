@@ -13,6 +13,8 @@ public abstract class ChainTask {
 
     private final String id;
 
+    private final Priority priority;
+    
     private final boolean async;
 
     @Deprecated
