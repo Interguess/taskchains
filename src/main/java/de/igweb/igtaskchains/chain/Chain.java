@@ -4,10 +4,7 @@ import de.igweb.igtaskchains.chain.executor.ChainExecutor;
 import de.igweb.igtaskchains.chain.task.ChainTask;
 import lombok.Getter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Getter
 @SuppressWarnings("unused")
@@ -28,26 +25,20 @@ public class Chain {
         this.executor = new ChainExecutor();
     }
 
-    public void work() {
-        work(false);
-    }
-
     public void work(boolean async) {
         if (async) {
-            new Thread(() -> {
-            List<ChainTask> tasksCopy = new ArrayList<>(this.tasks);
-            tasks.clear();
-
-            tasksCopy.sort(Comparator.comparingInt(ct -> ct.getPriority().getValue()));
-            tasksCopy.forEach(task -> task.start(executor));
-            }).start();
+            new Thread(this::work).start();
         } else {
-            List<ChainTask> tasksCopy = new ArrayList<>(this.tasks);
-            tasks.clear();
-
-            tasksCopy.sort(Comparator.comparingInt(ct -> ct.getPriority().getValue()));
-            tasksCopy.forEach(task -> task.start(executor));
+            work();
         }
+    }
+
+    public void work() {
+        List<ChainTask> tasksCopy = new ArrayList<>(this.tasks);
+        tasks.clear();
+
+        tasksCopy.sort(Comparator.comparingInt(task -> task.getPriority().getValue()));
+        tasksCopy.forEach(task -> task.start(executor));
     }
 
     public ChainTask getTask(String id) {
