@@ -10,24 +10,15 @@ public class ChainExample {
         Chain chain = new Chain("test-chain"); // Chains are useful for data processing.
 
         List<ChainTask> tasks = List.of(
-                new ChainTask("task-1", Priority.LOW) {
-                    @Override
-                    public void run() {
-                        System.out.println(getId());
-                    }
-                },
-                new ChainTask("task-2", Priority.HIGH) {
-                    @Override
-                    public void run() {
-                        System.out.println(getId());
-                    }
-                },
-                new ChainTask("task-3", Priority.NORMAL) {
-                    @Override
-                    public void run() {
-                        System.out.println(getId());
-                    }
-                }
+                new ChainTask("task-1", Priority.LOW, () -> {
+                    System.out.println("Task 1");
+                }),
+                new ChainTask("task-2", Priority.HIGH, () -> {
+                    System.out.println("Task 2");
+                }),
+                new ChainTask("task-3", Priority.NORMAL, () -> {
+                    System.out.println("Task 3");
+                })
         );
 
         tasks.forEach(chain::addTask);

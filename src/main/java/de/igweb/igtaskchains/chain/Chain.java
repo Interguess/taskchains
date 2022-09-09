@@ -1,14 +1,24 @@
 package de.igweb.igtaskchains.chain;
 
-import de.igweb.igtaskchains.chain.executor.ChainExecutor;
 import de.igweb.igtaskchains.chain.task.ChainTask;
 import lombok.Getter;
 
 import java.util.*;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 @Getter
 @SuppressWarnings("unused")
 public class Chain {
+
+    public static final ThreadPoolExecutor THREAD_POOL_EXECUTOR =
+            new ThreadPoolExecutor(
+                    10,
+                    10,
+                    0L,
+                    TimeUnit.MILLISECONDS,
+                    new LinkedBlockingQueue<>());
 
     private final String id;
 
@@ -16,18 +26,15 @@ public class Chain {
 
     private final List<ChainTask> tasks;
 
-    private final ChainExecutor executor;
-
     public Chain(String id) {
         this.id = id;
         this.taskMap = new HashMap<>();
         this.tasks = new ArrayList<>();
-        this.executor = new ChainExecutor();
     }
 
     public void work(boolean async) {
         if (async) {
-            new Thread(this::work).start();
+            THREAD_POOL_EXECUTOR.execute(this::work);
         } else {
             work();
         }
@@ -35,10 +42,9 @@ public class Chain {
 
     public void work() {
         List<ChainTask> tasksCopy = new ArrayList<>(this.tasks);
-        tasks.clear();
-
         tasksCopy.sort(Comparator.comparingInt(task -> task.getPriority().getValue()));
-        tasksCopy.forEach(task -> task.start(executor));
+        tasksCopy.forEach(ChainTask::start);
+        tasks.clear();
     }
 
     public ChainTask getTask(String id) {

@@ -1,6 +1,6 @@
 package de.igweb.igtaskchains.chain.task;
 
-import de.igweb.igtaskchains.chain.executor.ChainExecutor;
+import de.igweb.igtaskchains.chain.Chain;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor(force = true)
 @SuppressWarnings("all")
-public abstract class ChainTask {
+public class ChainTask {
 
     private final String id;
 
@@ -17,39 +17,38 @@ public abstract class ChainTask {
 
     private final boolean async;
 
-    @Deprecated
-    public abstract void run();
+    private final Runnable runnable;
 
-    public void start(ChainExecutor executor) {
+    public void start() {
         if (async) {
-            executor.async(this);
+            Chain.THREAD_POOL_EXECUTOR.execute(runnable::run);
         } else {
-            run();
+            runnable.run();
         }
     }
 
-    public ChainTask(String id, Priority priority) {
-        this(id, priority, false);
+    public ChainTask(String id, Priority priority, Runnable runnable) {
+        this(id, priority, false, runnable);
     }
 
-    public ChainTask(Priority priority) {
-        this("", priority, false);
+    public ChainTask(Priority priority, Runnable runnable) {
+        this("", priority, false, runnable);
     }
 
-    public ChainTask(String id, boolean async) {
-        this(id, Priority.NORMAL, async);
+    public ChainTask(String id, boolean async, Runnable runnable) {
+        this(id, Priority.NORMAL, async, runnable);
     }
 
-    public ChainTask(boolean async) {
-        this("", Priority.NORMAL, async);
+    public ChainTask(boolean async, Runnable runnable) {
+        this("", Priority.NORMAL, async, runnable);
     }
 
-    public ChainTask(Priority priority, boolean async) {
-        this("", priority, async);
+    public ChainTask(Priority priority, boolean async, Runnable runnable) {
+        this("", priority, async, runnable);
     }
 
-    public ChainTask(String id) {
-        this(id, Priority.NORMAL, false);
+    public ChainTask(String id, Runnable runnable) {
+        this(id, Priority.NORMAL, false, runnable);
     }
 
 }
