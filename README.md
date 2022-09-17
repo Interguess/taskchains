@@ -3,7 +3,7 @@
 Execute tasks synchronously or asynchronously by order or weight with TaskChains.
 
 ### **Need help?** 
-Join our [Discord Server](https://github.com/IgWebDE-StandardSucht/SuchtApi/blob/master/documentation.md). 
+Join our [Discord Server](https://discord.gg/AS5jbegGBX). 
 
 <hr> 
 
