@@ -2,55 +2,26 @@ package de.igweb.igtaskchains.chain;
 
 import de.igweb.igtaskchains.chain.task.ChainTask;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.*;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 @Getter
+@NoArgsConstructor
 @SuppressWarnings("unused")
 public class Chain {
 
-    public static final ThreadPoolExecutor THREAD_POOL_EXECUTOR = new ThreadPoolExecutor(10, 10, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
+    public static final ScheduledThreadPoolExecutor scheduledThreadPoolExecutor = new ScheduledThreadPoolExecutor(10);
 
-    private final String id;
+    private final Map<String, ChainTask> taskMap = new HashMap<>();
 
-    private final Map<String, ChainTask> taskMap;
+    private final List<ChainTask> tasks = new ArrayList<>();
 
-    private final List<ChainTask> tasks;
-
-    public Chain(String id) {
-        this.id = id;
-        this.taskMap = new HashMap<>();
-        this.tasks = new ArrayList<>();
-    }
-
-    public Chain(String id, int period) {
-        this.id = id;
-        this.taskMap = new HashMap<>();
-        this.tasks = new ArrayList<>();
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                work(true);
-            }
-        }, 0, period);
-    }
-
-    public void work(boolean async) {
-        if (async) {
-            THREAD_POOL_EXECUTOR.execute(this::work);
-        } else {
-            work();
-        }
-    }
-
-    public void work() {
-        List<ChainTask> tasksCopy = new ArrayList<>(this.tasks);
-        tasksCopy.sort(Comparator.comparingInt(task -> task.getPriority().getValue()));
-        tasksCopy.forEach(ChainTask::start);
-        tasks.clear();
+    public Chain(int period) {
+        this();
+        scheduledThreadPoolExecutor.scheduleAtFixedRate(this::work, 0, period, TimeUnit.MILLISECONDS);
     }
 
     public ChainTask getTask(String id) {
@@ -67,8 +38,13 @@ public class Chain {
         tasks.remove(task);
     }
 
-    public void removeTask(String id) {
-        removeTask(getTask(id));
+    public void work() {
+        scheduledThreadPoolExecutor.execute(() -> {
+            List<ChainTask> tasksCopy = new ArrayList<>(this.tasks);
+            tasksCopy.sort(Comparator.comparingInt(task -> task.getPriority().getValue()));
+            tasksCopy.forEach((task) -> task.getRunnable().run());
+            tasks.clear();
+        });
     }
 
 }
