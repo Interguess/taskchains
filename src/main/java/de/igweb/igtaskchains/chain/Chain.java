@@ -12,13 +12,7 @@ import java.util.concurrent.TimeUnit;
 @SuppressWarnings("unused")
 public class Chain {
 
-    public static final ThreadPoolExecutor THREAD_POOL_EXECUTOR =
-            new ThreadPoolExecutor(
-                    10,
-                    10,
-                    0L,
-                    TimeUnit.MILLISECONDS,
-                    new LinkedBlockingQueue<>());
+    public static final ThreadPoolExecutor THREAD_POOL_EXECUTOR = new ThreadPoolExecutor(10, 10, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
 
     private final String id;
 
@@ -30,6 +24,18 @@ public class Chain {
         this.id = id;
         this.taskMap = new HashMap<>();
         this.tasks = new ArrayList<>();
+    }
+
+    public Chain(String id, int period) {
+        this.id = id;
+        this.taskMap = new HashMap<>();
+        this.tasks = new ArrayList<>();
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                work(true);
+            }
+        }, 0, period);
     }
 
     public void work(boolean async) {
