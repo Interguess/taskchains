@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 @SuppressWarnings("unused")
 public class Chain {
 
-    public static final ScheduledThreadPoolExecutor scheduledThreadPoolExecutor = new ScheduledThreadPoolExecutor(10);
+    public static final ScheduledThreadPoolExecutor SCHEDULED_THREAD_POOL_EXECUTOR = new ScheduledThreadPoolExecutor(10);
 
     private final Map<String, ChainTask> taskMap = new HashMap<>();
 
@@ -21,7 +21,7 @@ public class Chain {
 
     public Chain(int period) {
         this();
-        scheduledThreadPoolExecutor.scheduleAtFixedRate(this::work, 0, period, TimeUnit.MILLISECONDS);
+        SCHEDULED_THREAD_POOL_EXECUTOR.scheduleAtFixedRate(this::work, 0, period, TimeUnit.MILLISECONDS);
     }
 
     public ChainTask getTask(String id) {
@@ -39,7 +39,7 @@ public class Chain {
     }
 
     public void work() {
-        scheduledThreadPoolExecutor.execute(() -> {
+        SCHEDULED_THREAD_POOL_EXECUTOR.execute(() -> {
             List<ChainTask> tasksCopy = new ArrayList<>(this.tasks);
             tasksCopy.sort(Comparator.comparingInt(task -> task.getPriority().getValue()));
             tasksCopy.forEach((task) -> task.getRunnable().run());
