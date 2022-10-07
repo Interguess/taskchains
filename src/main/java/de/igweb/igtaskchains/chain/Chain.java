@@ -20,8 +20,7 @@ public class Chain {
     private final List<ChainTask> tasks = new ArrayList<>();
 
     public Chain(int period) {
-        this();
-        SCHEDULED_THREAD_POOL_EXECUTOR.scheduleAtFixedRate(this::work, 0, period, TimeUnit.MILLISECONDS);
+        SCHEDULED_THREAD_POOL_EXECUTOR.scheduleAtFixedRate(this::work, period, period, TimeUnit.MILLISECONDS);
     }
 
     public ChainTask getTask(String id) {
