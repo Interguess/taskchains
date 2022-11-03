@@ -1,6 +1,7 @@
 package de.igweb.igtaskchains.chain;
 
 import de.igweb.igtaskchains.chain.task.ChainTask;
+import de.igweb.igtaskchains.chain.task.Priority;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -30,6 +31,27 @@ public class Chain {
     public void addTask(ChainTask task) {
         taskMap.put(task.getId(), task);
         tasks.add(task);
+    }
+
+    public void addTask(String id, Runnable runnable) {
+        addTask(new ChainTask(id, runnable));
+    }
+
+    public void addTask(Runnable runnable) {
+        addTask(new ChainTask(runnable));
+    }
+
+    public void addTask(String id, Priority priority, Runnable runnable) {
+        addTask(new ChainTask(id, priority, runnable));
+    }
+
+    public void addTask(Priority priority, Runnable runnable) {
+        addTask(new ChainTask(priority, runnable));
+    }
+
+    public void removeTask(String id) {
+        taskMap.remove(id);
+        tasks.removeIf(task -> task.getId().equals(id));
     }
 
     public void removeTask(ChainTask task) {
