@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 @SuppressWarnings("unused")
 public class Chain {
 
-    public static final ScheduledThreadPoolExecutor SCHEDULED_THREAD_POOL_EXECUTOR = new ScheduledThreadPoolExecutor(10);
+    public static final ScheduledThreadPoolExecutor SCHEDULED_THREAD_POOL_EXECUTOR = new ScheduledThreadPoolExecutor(5);
 
     private final Map<String, ChainTask> taskMap = new HashMap<>();
 
@@ -49,14 +49,14 @@ public class Chain {
         addTask(new ChainTask(priority, runnable));
     }
 
+    @Deprecated // use removeTask(String id) instead
+    public void removeTask(ChainTask task) {
+        removeTask(task.getId());
+    }
+
     public void removeTask(String id) {
         taskMap.remove(id);
         tasks.removeIf(task -> task.getId().equals(id));
-    }
-
-    public void removeTask(ChainTask task) {
-        taskMap.values().remove(task);
-        tasks.remove(task);
     }
 
     public void work() {
