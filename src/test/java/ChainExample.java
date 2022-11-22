@@ -10,7 +10,7 @@ public class ChainExample {
         Chain chain = new Chain(); // Chains are useful for data processing.
 
         List<ChainTask> tasks = List.of(
-                new ChainTask("task-1", Priority.NORMAL, () -> System.out.println("Task 1")),
+                new ChainTask("task-1", Priority.CUSTOM.priority(4), () -> System.out.println("Task 1")),
                 new ChainTask("task-2", Priority.NORMAL, () -> System.out.println("Task 2")),
                 new ChainTask("task-3", Priority.NORMAL, () -> System.out.println("Task 3")),
                 new ChainTask("task-4", Priority.NORMAL, () -> System.out.println("Task 4"))

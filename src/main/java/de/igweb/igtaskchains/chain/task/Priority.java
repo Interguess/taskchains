@@ -7,8 +7,13 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum Priority {
 
-    LOW(2), NORMAL(1), HIGH(0);
+    LOW(2), NORMAL(1), HIGH(0), CUSTOM(999);
 
-    private final int value;
+    private int value;
+
+    public Priority priority(int priority) {
+        value = priority;
+        return this;
+    }
 
 }
