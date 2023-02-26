@@ -14,4 +14,8 @@ public class Priority {
 
     public static final int HIGHEST = 4;
 
+    private Priority() {
+        // Prevent instantiation
+    }
+
 }
