@@ -37,4 +37,4 @@ dependencies {
 <hr>
 
 This Project is under the IGWEB OPENSOURCE SOFTWARE LICENSE v2: [LICENSE](LICENSE) <br>
-Copyright (c) 2023 Standardsucht.net
+Copyright (c) 2023 Interguessweb.de
