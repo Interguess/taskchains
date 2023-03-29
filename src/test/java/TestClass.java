@@ -4,7 +4,7 @@ import de.igweb.igtaskchains.Priority;
 public class TestClass {
 
     public static void main(String[] args) {
-        Chain chain = new Chain().automatic(100);
+        Chain chain = new Chain().automatic(1000);
 
         chain.addTask(Priority.HIGH, () -> System.out.println("This is a high priority task (#2)"));
         chain.addTask(Priority.LOW, () -> System.out.println("This is a low priority task (#4)"));
