@@ -17,5 +17,4 @@ public class Priority {
     private Priority() {
         // Prevent instantiation
     }
-
 }

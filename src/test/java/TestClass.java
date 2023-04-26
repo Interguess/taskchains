@@ -15,5 +15,4 @@ public class TestClass {
         // You can also add a task with a custom id (useful for remaining tasks)
         chain.addTask("custom-id", Priority.NORMAL, () -> System.out.println("This is a task with a custom id (#6)"));
     }
-
 }

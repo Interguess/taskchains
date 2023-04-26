@@ -166,5 +166,4 @@ public class Chain {
     public void removeTask(String id) {
         tasks.stream().filter(task -> task.getId().equals(id)).forEach(this::removeTask);
     }
-
 }
