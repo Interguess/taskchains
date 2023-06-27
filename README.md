@@ -5,7 +5,9 @@ Execute tasks synchronously or asynchronously by order or weight with TaskChains
 ## Use with Gradle
 ```gradle
 repositories {
-  maven { url 'https://jitpack.io' }
+  maven {
+    url 'https://jitpack.io'
+  }
 }
 ```
 
