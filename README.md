@@ -13,7 +13,7 @@ repositories {
 
 ```gradle
 dependencies {
-  implementation 'com.github.IgWebDE:IgTaskChains:latest'
+  implementation 'com.github.InterGuess:IgTaskChains:latest'
 }
 ```
 
@@ -28,7 +28,7 @@ dependencies {
   
 ```xml
 <dependency>
-  <groupId>com.github.IgWebDE</groupId>
+  <groupId>com.github.InterGuess</groupId>
   <artifactId>IgTaskChains</artifactId>
   <version>latest</version>
 </dependency>
