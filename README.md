@@ -1,4 +1,4 @@
-# IgTaskChains
+# TaskChains
 Execute tasks synchronously or asynchronously by order or weight with TaskChains.<br><br>
 
 ## Use with Gradle
