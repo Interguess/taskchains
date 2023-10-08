@@ -15,20 +15,3 @@ dependencies {
   implementation 'com.github.InterGuess:IgTaskChains:latest'
 }
 ```
-
-
-## Use with Maven
-```xml
-<repository>
-  <id>jitpack.io</id>
-  <url>https://jitpack.io</url>
-</repository>
-```
-  
-```xml
-<dependency>
-  <groupId>com.github.InterGuess</groupId>
-  <artifactId>IgTaskChains</artifactId>
-  <version>latest</version>
-</dependency>
-```
