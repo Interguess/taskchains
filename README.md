@@ -5,7 +5,7 @@ Execute tasks synchronously or asynchronously by order or weight with TaskChains
 ```gradle
 repositories {
     maven {
-        url 'https://repo.interguessweb.de'
+        url 'https://repo.interguessweb.de/maven-public/'
     }
 }
 ```
@@ -21,7 +21,7 @@ dependencies {
 <repositories>
     <repository>
         <id>interguess-repo</id>
-        <url>https://repo.interguessweb.de</url>
+        <url>https://repo.interguessweb.de/maven-public/</url>
     </repository>
 </repositories>
 ```
