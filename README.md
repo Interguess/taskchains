@@ -4,14 +4,34 @@ Execute tasks synchronously or asynchronously by order or weight with TaskChains
 ## Use with Gradle
 ```gradle
 repositories {
-  maven {
-    url 'https://jitpack.io'
-  }
+    maven {
+        url 'https://repo.interguessweb.de'
+    }
 }
 ```
 
 ```gradle
 dependencies {
-  implementation 'com.github.InterGuess:IgTaskChains:latest'
+    implementation 'de.interguess:taskchains:latest'
 }
+```
+
+## Use with Maven
+```xml
+<repositories>
+    <repository>
+        <id>interguess-repo</id>
+        <url>https://repo.interguessweb.de</url>
+    </repository>
+</repositories>
+```
+
+```xml
+<dependencies>
+    <dependency>
+        <groupId>de.interguess</groupId>
+        <artifactId>taskchains</artifactId>
+        <version>latest</version>
+    </dependency>
+</dependencies>
 ```
